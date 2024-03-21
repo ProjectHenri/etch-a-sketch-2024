@@ -8,7 +8,7 @@ let containerWidth = window
   .getComputedStyle(GRID_CONTAINER)
   .getPropertyValue("width")
   .slice(0, 3);
-let squareColor = "#222222";
+let effect;
 
 window.addEventListener("load", createGrid);
 
@@ -28,7 +28,24 @@ function createGrid(e) {
 
 function colorSquares(e){
 
-  e.target.style.backgroundColor = squareColor;
+switch(effect){
+  case "eraser":
+    e.target.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
+  break;
+  case "black":
+    e.target.style.backgroundColor = "rgba(34, 34, 34, 1.0)";
+  break;
+  case "rainbow":
+    e.target.style.backgroundColor = `rgba(
+      ${Math.floor(Math.random()*256)},
+      ${Math.floor(Math.random()*256)},
+      ${Math.floor(Math.random()*256)},
+      1
+  )`;
+  break;
+  default:
+    e.target.style.backgroundColor = "rgba(34, 34, 34, 1.0)";
+}
 
 }
 
@@ -42,6 +59,25 @@ INPUTS.forEach((input) => addFunctionality(input));
 
 function addFunctionality(input) {
   switch (input.getAttribute("id")) {
+    case "clear":
+      input.addEventListener("click", createGrid)
+      break;
+    case "eraser":
+      input.addEventListener("click", () => effect = "eraser");
+      input.addEventListener("click", toggleStates);
+      break;
+    case "black":
+      input.addEventListener("click", () => effect = "black");
+      input.addEventListener("click", toggleStates);
+      break;
+    case "rainbow":
+      input.addEventListener("click", () => effect = "rainbow");
+      input.addEventListener("click", toggleStates);
+      break;
+    case "shadow":
+      input.addEventListener("click", () => effect = "shadow");
+      input.addEventListener("click", toggleStates);
+      break;
     case "slider":
       input.addEventListener("input", createGrid);
       input.addEventListener("input", (e) => {
@@ -49,12 +85,11 @@ function addFunctionality(input) {
           `GRID SIZE: ${e.target.value} x ${e.target.value}`;
       });
       break;
-    case "black":
-      input.addEventListener("click", () => squareColor = "#222222");
-      break;
-    case "clear":
-      input.addEventListener("click", createGrid)
-      break;
   }
+}
+
+function toggleStates(e){
+  INPUTS.forEach(input => input.classList.remove("active"));
+  e.target.classList.add("active");
 }
 
