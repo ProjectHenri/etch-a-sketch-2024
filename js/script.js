@@ -9,6 +9,7 @@ let containerWidth = window
   .getPropertyValue("width")
   .slice(0, 3);
 let effect;
+let currentOppacity;
 
 window.addEventListener("load", createGrid);
 
@@ -30,21 +31,28 @@ function colorSquares(e){
 
 switch(effect){
   case "eraser":
-    e.target.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
+    e.target.style.backgroundColor = "#ffffff";
   break;
   case "black":
-    e.target.style.backgroundColor = "rgba(34, 34, 34, 1.0)";
+    e.target.style.backgroundColor = "#222222";
   break;
   case "rainbow":
-    e.target.style.backgroundColor = `rgba(
-      ${Math.floor(Math.random()*256)},
-      ${Math.floor(Math.random()*256)},
-      ${Math.floor(Math.random()*256)},
-      1
-  )`;
+    let randomR = Math.floor(Math.random()*256);
+    let randomB = Math.floor(Math.random()*256);
+    let randomG = Math.floor(Math.random()*256);
+    e.target.style.backgroundColor = `rgb(${randomR},${randomB},${randomG})`;
+  break;
+  case "shadow":
+    currentOppacity = Number(e.target.style.opacity) || 0.1;
+    console.log(currentOppacity);
+    if (currentOppacity < 1){
+      currentOppacity += 0.1;
+      e.target.style.opacity = currentOppacity;
+      e.target.style.backgroundColor = "#222222";
+    }
   break;
   default:
-    e.target.style.backgroundColor = "rgba(34, 34, 34, 1.0)";
+    e.target.style.backgroundColor = "#222222";
 }
 
 }
