@@ -10,4 +10,4 @@
 </ul>
 
 
-<!-- <h2>LIVE DEMO: <a href="">ETCH-A-SKETCH<a></h2> -->
+<h2>LIVE DEMO: <a href="https://projecthenri.github.io/etch-a-sketch-2024/">ETCH-A-SKETCH<a></h2>
